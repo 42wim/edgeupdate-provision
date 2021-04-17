@@ -100,6 +100,8 @@ async fn main() -> Result<()> {
 
     let array: Vec<Releases> = serde_json::from_str(&x).unwrap();
 
+    fs::remove_file("sha256sum.txt")?;
+
     for elem in array.iter() {
       let tofind = ["MicrosoftEdge_X64_", ringversion, ".exe"].concat();
       let fname = ["MicrosoftEdge_X64_", ring, "_", ringversion, ".exe"].concat();
