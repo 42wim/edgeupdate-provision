@@ -124,7 +124,8 @@ async fn main() -> Result<()> {
           .write(true)
           .open([ring, ".txt"].concat())?;
 
-        ringurl.write_all(elem.Url.as_bytes())?;
+        let versionoutput = [&ringversion, ":", &elem.Url].concat();
+        ringurl.write_all(versionoutput.as_bytes())?;
         ringurl.flush()?;
         //download(&elem.Url, &fname).await;
       }
