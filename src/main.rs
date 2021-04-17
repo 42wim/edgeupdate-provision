@@ -54,6 +54,8 @@ async fn main() -> Result<()> {
     .http1_title_case_headers()
     .build()?;
 
+  println!("getting latest versions from microsoft");
+
   let versions = client
     .get("https://www.microsoftedgeinsider.com/api/versions")
     .send()
@@ -61,7 +63,7 @@ async fn main() -> Result<()> {
     .json::<Versions>()
     .await?;
 
-  // println!("{:?}", versions);
+  println!("found {:?}", versions);
 
   let mut releases = HashMap::new();
   releases.insert(String::from("stable"), versions.stable);
@@ -71,6 +73,7 @@ async fn main() -> Result<()> {
   let edge_url="https://msedge.api.cdp.microsoft.com/api/v1.1/internal/contents/Browser/namespaces/Default/names/msedge-";
 
   for (ring, ringversion) in &releases {
+    println!("getting info about {} version {}", ring, ringversion);
     let combined = [
       edge_url,
       ring,
@@ -127,7 +130,7 @@ async fn main() -> Result<()> {
     }
 
     thread::sleep(time::Duration::from_secs(30));
-    println!("next file");
+    println!("done");
   }
   Ok(())
 }
