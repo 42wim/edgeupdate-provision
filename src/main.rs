@@ -72,7 +72,6 @@ async fn main() -> Result<()> {
   releases.insert(String::from("beta"), versions.beta);
   let edge_url="https://msedge.api.cdp.microsoft.com/api/v1.1/internal/contents/Browser/namespaces/Default/names/msedge-";
 
-  fs::remove_file("sha256sum.txt")?;
   for (ring, ringversion) in &releases {
     println!("getting info about {} version {}", ring, ringversion);
     let combined = [
@@ -110,13 +109,11 @@ async fn main() -> Result<()> {
         let b64bytes = base64::decode(&elem.Hashes.Sha256).unwrap();
         let hexsum = hex::encode(b64bytes);
 
-        let output = [&hexsum, "\t", &fname, "\n"].concat();
-
         let mut file = OpenOptions::new()
           .create(true)
-          .append(true)
-          .open("sha256sum.txt")?;
-        file.write_all(output.as_bytes())?;
+          .write(true)
+          .open([ring, ".sha256"].concat())?;
+        file.write_all(hexsum.as_bytes())?;
         file.flush()?;
 
         let mut ringurl = OpenOptions::new()
