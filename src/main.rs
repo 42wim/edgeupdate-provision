@@ -72,6 +72,7 @@ async fn main() -> Result<()> {
   releases.insert(String::from("beta"), versions.beta);
   let edge_url="https://msedge.api.cdp.microsoft.com/api/v1.1/internal/contents/Browser/namespaces/Default/names/msedge-";
 
+  fs::remove_file("sha256sum.txt")?;
   for (ring, ringversion) in &releases {
     println!("getting info about {} version {}", ring, ringversion);
     let combined = [
@@ -99,8 +100,6 @@ async fn main() -> Result<()> {
     // println!("{:?}", x);
 
     let array: Vec<Releases> = serde_json::from_str(&x).unwrap();
-
-    fs::remove_file("sha256sum.txt")?;
 
     for elem in array.iter() {
       let tofind = ["MicrosoftEdge_X64_", ringversion, ".exe"].concat();

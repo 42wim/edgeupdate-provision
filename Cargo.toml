@@ -1,6 +1,6 @@
 [package]
 name = "edgeupdate-provision"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Wim <wim@42.be>"]
 edition = "2018"
 
