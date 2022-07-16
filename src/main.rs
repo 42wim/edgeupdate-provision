@@ -67,7 +67,7 @@ async fn main() -> Result<()> {
 
   let mut releases = HashMap::new();
   releases.insert(String::from("stable"), versions.stable);
-  releases.insert(String::from("dev"), versions.dev);
+  // releases.insert(String::from("dev"), versions.dev);
   releases.insert(String::from("canary"), versions.canary);
   releases.insert(String::from("beta"), versions.beta);
   let edge_url="https://msedge.api.cdp.microsoft.com/api/v1.1/internal/contents/Browser/namespaces/Default/names/msedge-";
